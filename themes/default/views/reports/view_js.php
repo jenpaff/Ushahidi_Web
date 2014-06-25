@@ -48,6 +48,9 @@ jQuery(window).load(function() {
 			new OpenLayers.Control.Attribution()
 		],
 
+		maxExtent: OpenLayers.Bounds(-180, -90, 180, 90),
+		restrictedExtent: OpenLayers.Bounds(-180,-90,180,90),	
+
 		// Base layers
 		baseLayers: <?php echo map::layers_array(FALSE); ?>
 
@@ -144,6 +147,20 @@ jQuery(window).load(function() {
 		url: "<?php echo 'json/single/'.$incident_id; ?>",
 		styleMap: styleMap
 	});
+
+	/*Add the functions that will be executed when buttons are clicked:*/
+
+	function updateMaxExtent() {   
+    	map.setOptions({
+        	maxExtent: new OpenLayers.Bounds(-180,-90,180,90)
+   	});
+	}
+
+	function updateRestrictedExtent() {
+   	map.setOptions({
+        	restrictedExtent: new OpenLayers.Bounds(-180,-90,180,90)
+   	 });
+	}
 	
 	// Ajax Validation for the comments
 	$("#commentForm").validate({

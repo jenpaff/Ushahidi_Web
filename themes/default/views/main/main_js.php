@@ -208,7 +208,10 @@ jQuery(function() {
 
 		// Map controls
 		mapControls: [
-			new OpenLayers.Control.Navigation({ dragPanOptions: { enableKinetic: true } },  {zoomWheelEnabled: false} ),
+			new OpenLayers.Control.Navigation({ 
+				dragPanOptions: { 
+					enableKinetic: true } }, {
+					zoomWheelEnabled: false} ),
 			new OpenLayers.Control.Attribution(),
 			new OpenLayers.Control.Zoom(),
 			new OpenLayers.Control.MousePosition({
@@ -219,6 +222,8 @@ jQuery(function() {
 			new OpenLayers.Control.ScaleLine(),
 			new OpenLayers.Control.LayerSwitcher()
 		],
+		maxExtent: OpenLayers.Bounds(-180, -90, 180, 90),
+		restrictedExtent: OpenLayers.Bounds(-180,-90,180,90),
 
 		// Base layers
 		baseLayers: <?php echo map::layers_array(FALSE); ?>,
@@ -307,6 +312,20 @@ jQuery(function() {
 
 		return false;
 	});
+
+		/*Add the functions that will be executed when buttons are clicked:*/
+
+		function updateMaxExtent() {   
+   		 map.setOptions({
+        		maxExtent: new OpenLayers.Bounds(-180,-90,180,90)
+   		});
+		}
+
+		function updateRestrictedExtent() {
+    		map.setOptions({
+        		restrictedExtent: new OpenLayers.Bounds(-180,-90,180,90)
+    		});
+		}
 		
 	// Timeslider and date change actions
 	$("select#startDate, select#endDate").selectToUISlider({

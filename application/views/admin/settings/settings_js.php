@@ -26,8 +26,12 @@ $(document).ready(function() {
 			latitude: <?php echo $default_lat; ?>,
 			longitude: <?php echo $default_lon; ?>
 		},
+		maxExtent: OpenLayers.Bounds(-180, -90, 180, 90),
+		restrictedExtent: OpenLayers.Bounds(-180,-90,180,90),
 		mapControls: [
-		    new OpenLayers.Control.Navigation({ dragPanOptions: { enableKinetic: true } }),
+		    new OpenLayers.Control.Navigation({ dragPanOptions: { 
+		    	enableKinetic: true }},  {
+		    	zoomWheelEnabled: false}),
 		    new OpenLayers.Control.Zoom(),
 		    new OpenLayers.Control.MousePosition({
 				formatOutput: Ushahidi.convertLongLat
@@ -70,6 +74,17 @@ $(document).ready(function() {
 			}
 		}
 	}).hide();
+
+	function updateMaxExtent() {   
+    map.setOptions({
+        maxExtent: new OpenLayers.Bounds(-180,-90,180,90)
+    });
+	}
+
+	function updateRestrictedExtent() {
+    map.setOptions({
+        restrictedExtent: new OpenLayers.Bounds(-180,-90,180,90)
+    });
 		
 	// Detect country dropdown change, then zoom to selected country
 	$('#default_country').change(function(){

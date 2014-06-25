@@ -13,7 +13,7 @@
 	 * @param targetElement ID of the element to be used for creating the map
 	 * @param options Options to be used for creating the map
 	 */
-	function createMap(targetElement, lat, lon, zoomLevel, options, controls)
+	function createMap(targetElement, lat, lon, zoomLevel, options, controls, maxExtent, restrictedExtent)
 	{
 		if (typeof targetElement == 'undefined' 
 		    || $("#"+targetElement) == null) {
@@ -29,9 +29,8 @@
 				controls: [],
 				projection: proj_900913,
 				'displayProjection': proj_4326,
-				maxExtent: new OpenLayers.Bounds(-71.147, -71.147, 
-			                                 42.472, 42.472),
-				maxResolution: 76.43702827453613,
+				maxExtent: OpenLayers.Bounds(-180, -90, 180, 90),
+				restrictedExtent: OpenLayers.Bounds(-180,-90,180,90),
 			};
 		}
 
@@ -47,7 +46,10 @@
 		if (typeof controls == "undefined" || controls == null) {
 			// Set the controls for the map options
 			map.addControls([
-				new OpenLayers.Control.Navigation({ dragPanOptions: { enableKinetic: true } },  {zoomWheelEnabled: false}),
+				new OpenLayers.Control.Navigation({ 
+					dragPanOptions: { 
+						enableKinetic: true }, {
+						zoomWheelEnabled: false}),
 				new OpenLayers.Control.Zoom(),
 				new OpenLayers.Control.Attribution(),
 				new OpenLayers.Control.MousePosition({
@@ -259,3 +261,19 @@
 		}
     	onPopupClose(true);
 	}
+
+	/**
+	*Add the functions that will be executed when buttons are clicked:
+	*/
+
+	function updateMaxExtent() {   
+    map.setOptions({
+        maxExtent: new OpenLayers.Bounds(-180,-90,180,90)
+    });
+	}
+
+	function updateRestrictedExtent() {
+    map.setOptions({
+        restrictedExtent: new OpenLayers.Bounds(-180,-90,180,90)
+    });
+}

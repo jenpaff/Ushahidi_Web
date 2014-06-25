@@ -75,9 +75,8 @@
 				eventListeners: {
 					"zoomend": incidentZoom
 				},
-				maxExtent: new OpenLayers.Bounds(-71.147, -71.147, 
-			                                 42.472, 42.472),
-				maxResolution: 76.43702827453613,
+				maxExtent: OpenLayers.Bounds(-180, -90, 180, 90),
+				restrictedExtent: OpenLayers.Bounds(-180,-90,180,90),
 			};
 			
 			// Now initialise the map
@@ -85,7 +84,9 @@
 			
 			<?php echo map::layers_js(FALSE); ?>
 			map.addLayers(<?php echo map::layers_array(FALSE); ?>);
-			map.addControl(new OpenLayers.Control.Navigation({zoomWheelEnabled: false}));
+			map.addControl(new OpenLayers.Control.Navigation({
+				zoomWheelEnabled: false
+			}));
 			map.addControl(new OpenLayers.Control.Zoom());
 			map.addControl(new OpenLayers.Control.MousePosition({
 				formatOutput: Ushahidi.convertLongLat
@@ -902,6 +903,17 @@
 		function incidentZoom(event) {
 			$("#incident_zoom").val(map.getZoom());
 		}
+
+		function updateMaxExtent() {   
+    		map.setOptions({
+        		maxExtent: new OpenLayers.Bounds(-180,-90,180,90)
+   		 });
+		}
+
+		function updateRestrictedExtent() {
+    		map.setOptions({
+        		restrictedExtent: new OpenLayers.Bounds(-180,-90,180,90)
+   		});
 		
 		function updateFeature(feature, color, strokeWidth){
 		

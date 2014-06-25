@@ -124,9 +124,10 @@ function showMap()
 	, controls:[],
 	projection: proj_900913,
 	'displayProjection': proj_4326,
-	maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 20037508.34, 20037508.34),
-	maxResolution: 76.43702827453613
-	};
+	maxExtent: OpenLayers.Bounds(-180, -90, 180, 90),
+	restrictedExtent: OpenLayers.Bounds(-180,-90,180,90),
+			};
+		}
 	
 	map = new OpenLayers.Map('ReporterMap', options);
 	
@@ -208,4 +209,19 @@ function showMap()
 			return false;
 		}
 	});
+
+	/**
+	*Add the functions that will be executed when buttons are clicked:
+	*/
+
+	function updateMaxExtent() {   
+    map.setOptions({
+        maxExtent: new OpenLayers.Bounds(-180,-90,180,90)
+    });
+	}
+
+	function updateRestrictedExtent() {
+    map.setOptions({
+        restrictedExtent: new OpenLayers.Bounds(-180,-90,180,90)
+    });
 }
